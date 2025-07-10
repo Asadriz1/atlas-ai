@@ -1,5 +1,7 @@
 # 🌍 Atlas AI – Your Intelligent Travel Assistant
 
+![Atlas AI Preview](./atlasdemo.png)
+
 Atlas AI is a cutting-edge, AI-powered travel assistant designed to help you effortlessly create personalized travel itineraries. Plan smarter, travel better!
 
 ---
