@@ -1,0 +1,6 @@
+{
+  "name": "VoyageAI",
+  "description": "Your personal AI travel planner. Get custom itineraries based on your destination, budget, and interests, powered by Gemini.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
