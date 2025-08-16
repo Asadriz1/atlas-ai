@@ -2,179 +2,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <title>Atlas AI - Your Personal Travel Planner</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
-    "gsap": "https://esm.sh/gsap@3.12.5",
-    "gsap/ScrollToPlugin": "https://esm.sh/gsap@3.12.5/ScrollToPlugin",
-    "jspdf": "https://esm.sh/jspdf@2.5.1",
-    "html2canvas": "https://esm.sh/html2canvas@1.4.1",
-    "gsap/": "https://esm.sh/gsap@^3.13.0/"
-  }
-}
-</script>
-    <script src="config.js"></script>
-    <script type="module" src="index.tsx"></script>
-<link rel="stylesheet" href="/index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>Atlas AI — Modern Travel, Instantly</title>
+  <link rel="stylesheet" href="/index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
-<body>
-    <div id="preloader">
-        <div class="preloader-content">
-            <div class="preloader-text">Powering your travel experience with AI</div>
-            <h1 class="preloader-logo">Atlas AI</h1>
-            <div class="preloader-spinner"></div>
+<body class="landing">
+  <header class="landing-header">
+    <nav class="landing-nav">
+      <a class="logo-mark" href="/">
+        <img src="/favicon.svg" alt="Atlas AI" />
+        <span>Atlas AI</span>
+      </a>
+      <div class="nav-cta-group">
+        <a class="text-link" href="/app.html#about">About</a>
+        <a class="text-link" href="#how-it-works">How it works</a>
+        <a class="outline-btn" href="/app.html">Travel</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="landing-hero reveal in" data-delay="100">
+      <div class="badge">AI-native travel planner</div>
+      <h1>Plan unforgettable trips in seconds.</h1>
+      <p>Give Atlas AI a destination and vibe. Get a beautiful, structured itinerary you can tweak, share, and export.</p>
+      <div class="cta-row">
+        <a class="primary-btn large" href="/app.html">Start planning</a>
+        <a class="ghost-btn large" href="#how-it-works">See how it works</a>
+      </div>
+      <div class="hero-footnote">No signup. Your key, your data. Built for speed.</div>
+      <div class="hero-visual">
+        <img src="/demo.png" alt="Atlas AI travel planning demo" class="hero-demo">
+      </div>
+    </section>
+
+    <section id="how-it-works" class="hiw">
+      <div class="hiw-grid">
+        <div class="card reveal" data-delay="100">
+          <h3>1. Describe your trip</h3>
+          <p>Destination, duration, budget, and vibe. Keep it simple or go deep.</p>
         </div>
-    </div>
+        <div class="card reveal" data-delay="200">
+          <h3>2. AI crafts the plan</h3>
+          <p>Day-by-day activities, dining, and stays—tailored to your preferences.</p>
+        </div>
+        <div class="card reveal" data-delay="300">
+          <h3>3. Export & go</h3>
+          <p>Download a polished PDF and take your itinerary anywhere.</p>
+        </div>
+      </div>
+    </section>
 
-    <header class="content-hidden">
-        <nav>
-            <a href="#" class="logo" data-page="home">Atlas AI</a>
-            <div class="nav-links">
-                 <a href="#" class="nav-link active" data-page="home">Home</a>
-                 <a href="#" class="nav-link" data-page="about">About</a>
-            </div>
-            <button id="theme-toggle" aria-label="Toggle dark mode">
-                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg id="theme-icon-moon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
-        </nav>
-    </header>
+    <section class="features">
+      <div class="features-grid">
+        <div class="feature-card reveal" data-delay="100">
+          <h3>Personalized by vibe</h3>
+          <p>Beachy, cultural, foodie, or off-the-grid—pick your style and let the plan adapt.</p>
+        </div>
+        <div class="feature-card reveal" data-delay="200">
+          <h3>Smart budget matching</h3>
+          <p>From budget to luxury, recommendations match what you want to spend.</p>
+        </div>
+        <div class="feature-card reveal" data-delay="300">
+          <h3>Clean daily structure</h3>
+          <p>Each day includes activities, dining, and a stay—simple and actionable.</p>
+        </div>
+        <div class="feature-card reveal" data-delay="400">
+          <h3>Export-ready</h3>
+          <p>Share or download a polished PDF. Handy on the go.</p>
+        </div>
+      </div>
+    </section>
 
-    <div id="setup-guide" class="hidden content-hidden"></div>
+    <section class="testimonials">
+      <div id="testimonials-root"></div>
+    </section>
     
-    <div id="home-page" class="content-hidden">
-        <!-- Landing Page Section -->
-        <section id="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">Craft Your Dream Trip in Seconds</h1>
-                <p class="hero-subtitle">Tell us your destination, budget, and interests. Our AI will build a personalized itinerary just for you.</p>
-                <button id="start-planning-btn">Start Planning</button>
-            </div>
-        </section>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client"
+        }
+      }
+    </script>
+    <script type="module">
+      import React from 'react';
+      import { createRoot } from 'react-dom/client';
+      import { InfiniteMovingCardsDemo } from './src/components/infinite-moving-cards-demo.jsx';
+      
+      const testimonialsRoot = document.getElementById('testimonials-root');
+      const root = createRoot(testimonialsRoot);
+      root.render(React.createElement(InfiniteMovingCardsDemo));
+    </script>
 
-        <!-- Main Content: Planner & Results -->
-        <main id="main-content">
-            <section id="planner-section">
-                <div class="planner-layout">
-                    <div class="planner-info">
-                        <h2>Your Travel Blueprint</h2>
-                        <p>Tell us about your travel style. The more details you provide, the more personalized your AI-generated itinerary will be.</p>
-                    </div>
-                    <form id="planner-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="destination-input">Destination</label>
-                                <input type="text" id="destination-input" placeholder="e.g., Tokyo, Japan" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="duration-input">Trip Duration (days)</label>
-                                <input type="number" id="duration-input" value="7" min="1" max="30" required>
-                            </div>
-                        </div>
+    <section class="faq" id="faq">
+      <h2 class="reveal" data-delay="100">FAQs</h2>
+      <div class="faq-grid">
+        <div class="faq-item reveal" data-delay="150">
+          <h4>Do I need an account?</h4>
+          <p>No account required. Provide your API key locally to generate plans.</p>
+        </div>
+        <div class="faq-item reveal" data-delay="250">
+          <h4>Can I customize the plan?</h4>
+          <p>Yes—just refine your inputs and regenerate. It’s fast.</p>
+        </div>
+        <div class="faq-item reveal" data-delay="350">
+          <h4>Does it work for families?</h4>
+          <p>Absolutely. Choose your age group and interests for tailored picks.</p>
+        </div>
+      </div>
+    </section>
 
-                        <div class="form-group">
-                            <label for="age-group-select">Age Group</label>
-                            <select id="age-group-select">
-                                <option value="18-25">18-25</option>
-                                <option value="26-35">26-35</option>
-                                <option value="36-50">36-50</option>
-                                <option value="50+">50+</option>
-                                <option value="Family with kids">Family with kids</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vibe-textarea">Describe the trip's vibe</label>
-                            <textarea id="vibe-textarea" rows="3" placeholder="e.g., Relaxing beach vacation with good food, or a fast-paced city exploration."></textarea>
-                        </div>
+    <section class="final-cta reveal" data-delay="100">
+      <h2>Ready to explore smarter?</h2>
+      <p>Create your trip plan now and hit the road with confidence.</p>
+      <div class="cta-row">
+        <a class="primary-btn large" href="/app.html">Start planning</a>
+      </div>
+    </section>
+  </main>
 
-                        <div class="form-group">
-                            <label>Spot Preference</label>
-                            <div class="segmented-control" id="spot-preference-control">
-                                <button type="button" class="active" data-value="Popular Tourist Spots">📍 Popular Spots</button>
-                                <button type="button" data-value="Lowkey Hangouts">🤫 Lowkey Hangouts</button>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Budget</label>
-                            <div class="segmented-control" id="budget-control">
-                                <button type="button" data-value="Budget">💰 Budget</button>
-                                <button type="button" class="active" data-value="Mid-Range">💳 Mid-Range</button>
-                                <button type="button" data-value="Luxury">💎 Luxury</button>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Interests</label>
-                            <div class="tags-group" id="interests-group">
-                                <button type="button" data-value="Food">🍜 Food</button>
-                                <button type="button" data-value="History">🏛️ History</button>
-                                <button type="button" data-value="Adventure">🏞️ Adventure</button>
-                                <button type="button" data-value="Art & Culture">🎨 Art</button>
-                                <button type="button" data-value="Nightlife">🎉 Nightlife</button>
-                                <button type="button" data-value="Nature">🌳 Nature</button>
-                                <button type="button" data-value="Shopping">🛍️ Shopping</button>
-                            </div>
-                        </div>
-
-                        <button type="submit" id="generate-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                            <span>Generate Itinerary</span>
-                        </button>
-                    </form>
-                </div>
-            </section>
-
-            <section id="result-section" class="hidden" aria-live="polite"></section>
-        </main>
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <span>© <span id="year"></span> Atlas AI</span>
+      <a class="text-link" href="/app.html">Travel</a>
     </div>
+  </footer>
 
-    <main id="about-page" class="about-container hidden content-hidden">
-        <!-- Animated Background Blobs -->
-        <div class="blob"></div>
-        <div class="blob"></div>
-        <div class="blob"></div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-        <div class="about-header">
-            <h1>About AtlasAI</h1>
-            <p>Your personal travel planning companion powered by cutting-edge AI technology</p>
-        </div>
-        
-        <div class="about-content">
-            <div class="about-card">
-                <h2>🚀 Our Vision</h2>
-                <p>We're on a mission to revolutionize travel planning by leveraging artificial intelligence to create personalized, stress-free travel experiences. Our platform combines advanced algorithms with local insights to craft the perfect itinerary for every traveler.</p>
-            </div>
-            
-            <div class="about-card">
-                <h2>💡 How It Works</h2>
-                <p>Simply share your destination, budget, and interests. Our AI analyzes millions of data points to recommend the best attractions, dining, and activities tailored specifically to your preferences, saving you hours of research.</p>
-            </div>
-            
-            <div class="about-card">
-                <h2>✨ Why Choose Us</h2>
-                <p>Unlike traditional travel agencies, we use real-time data and machine learning to provide up-to-date recommendations that adapt to your needs. Whether you're a solo adventurer or a family on vacation, we've got you covered.</p>
-            </div>
-        </div>
-        
-        <div class="creator">
-            <p>Designed and Developed with ❤️ by</p>
-            <div class="signature">Asad Rizvi</div>
-            <p>Bringing travel dreams to life, one algorithm at a time</p>
-        </div>
-    </main>
+    // Simple reveal-on-scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-<script type="module" src="/index.tsx"></script>
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>

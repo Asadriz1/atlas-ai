@@ -115,6 +115,11 @@ const initializeApp = () => {
 
     if (!apiKey || apiKey === "PASTE_YOUR_API_KEY_HERE" || apiKey === "YOUR_API_KEY_HERE") {
         console.error("Initialization Error: API Key not found or is placeholder.");
+        // Allow About page to be viewed even without API key
+        if (location.hash === '#about') {
+            runMainApp();
+            return;
+        }
         showSetupGuide();
         return; 
     }
@@ -129,9 +134,10 @@ const initializeApp = () => {
 };
 
 const runMainApp = () => {
-    // Hide setup guide and show home page by default
+    // Hide setup guide and show initial page based on hash
     setupGuide.classList.add('hidden');
-    setInitialPage('home');
+    const initial = (location.hash === '#about') ? 'about' : 'home';
+    setInitialPage(initial);
 
     // Attach all event listeners
     themeToggle.addEventListener('click', handleThemeToggle);
@@ -181,6 +187,12 @@ const runMainApp = () => {
     logoLink.addEventListener('click', (e) => {
         e.preventDefault();
         navigateTo('home');
+    });
+
+    // Respond to hash changes (e.g., external links to #about)
+    window.addEventListener('hashchange', () => {
+        const target = (location.hash === '#about') ? 'about' : 'home';
+        setInitialPage(target);
     });
 };
 

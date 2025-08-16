@@ -9,4 +9,4 @@
 // window.GEMINI_API_KEY = "ABCa123dEfg456...";
 // ------------------------------------------------------------------
 
-window.GEMINI_API_KEY = "PASTE_YOUR_API_KEY_HERE";
+window.GEMINI_API_KEY = "AIzaSyBtAKvwAhtCDPq_59CN1qgwT6DNESQ-z9E";

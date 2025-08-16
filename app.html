@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <title>Atlas AI - Planner</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
+    "gsap": "https://esm.sh/gsap@3.12.5",
+    "gsap/ScrollToPlugin": "https://esm.sh/gsap@3.12.5/ScrollToPlugin",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@1.4.1",
+    "gsap/": "https://esm.sh/gsap@^3.13.0/"
+  }
+}
+</script>
+    <script src="config.js"></script>
+    <script type="module" src="index.tsx"></script>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-text">Powering your travel experience with AI</div>
+            <h1 class="preloader-logo">Atlas AI</h1>
+            <div class="preloader-spinner"></div>
+        </div>
+    </div>
+
+    <header class="content-hidden">
+        <nav>
+            <a href="/" class="logo" title="Go Home">Atlas AI</a>
+            <div class="nav-links">
+                 <a href="#" class="nav-link active" data-page="home">Travel</a>
+                 <a href="/" class="home-link" title="Home">Home</a>
+            </div>
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg id="theme-icon-moon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </nav>
+    </header>
+
+    <div id="setup-guide" class="hidden content-hidden"></div>
+    
+    <div id="home-page" class="content-hidden">
+        <!-- Landing Page Section -->
+        <section id="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Craft Your Dream Trip in Seconds</h1>
+                <p class="hero-subtitle">Tell us your destination, budget, and interests. Our AI will build a personalized itinerary just for you.</p>
+                <button id="start-planning-btn">Start Planning</button>
+            </div>
+        </section>
+
+        <!-- Main Content: Planner & Results -->
+        <main id="main-content">
+            <section id="planner-section">
+                <div class="planner-layout">
+                    <div class="planner-info">
+                        <h2>Your Travel Blueprint</h2>
+                        <p>Tell us about your travel style. The more details you provide, the more personalized your AI-generated itinerary will be.</p>
+                    </div>
+                    <form id="planner-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destination-input">Destination</label>
+                                <input type="text" id="destination-input" placeholder="e.g., Tokyo, Japan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration-input">Trip Duration (days)</label>
+                                <input type="number" id="duration-input" value="7" min="1" max="30" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age-group-select">Age Group</label>
+                            <select id="age-group-select">
+                                <option value="18-25">18-25</option>
+                                <option value="26-35">26-35</option>
+                                <option value="36-50">36-50</option>
+                                <option value="50+">50+</option>
+                                <option value="Family with kids">Family with kids</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vibe-textarea">Describe the trip's vibe</label>
+                            <textarea id="vibe-textarea" rows="3" placeholder="e.g., Relaxing beach vacation with good food, or a fast-paced city exploration."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Spot Preference</label>
+                            <div class="segmented-control" id="spot-preference-control">
+                                <button type="button" class="active" data-value="Popular Tourist Spots">📍 Popular Spots</button>
+                                <button type="button" data-value="Lowkey Hangouts">🤫 Lowkey Hangouts</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Budget</label>
+                            <div class="segmented-control" id="budget-control">
+                                <button type="button" data-value="Budget">💰 Budget</button>
+                                <button type="button" class="active" data-value="Mid-Range">💳 Mid-Range</button>
+                                <button type="button" data-value="Luxury">💎 Luxury</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Interests</label>
+                            <div class="tags-group" id="interests-group">
+                                <button type="button" data-value="Food">🍜 Food</button>
+                                <button type="button" data-value="History">🏛️ History</button>
+                                <button type="button" data-value="Adventure">🏞️ Adventure</button>
+                                <button type="button" data-value="Art & Culture">🎨 Art</button>
+                                <button type="button" data-value="Nightlife">🎉 Nightlife</button>
+                                <button type="button" data-value="Nature">🌳 Nature</button>
+                                <button type="button" data-value="Shopping">🛍️ Shopping</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="generate-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            <span>Generate Itinerary</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="result-section" class="hidden" aria-live="polite"></section>
+        </main>
+    </div>
+
+    <main id="about-page" class="about-container hidden content-hidden">
+        <!-- Animated Background Blobs -->
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+
+        <div class="about-header">
+            <h1>About AtlasAI</h1>
+            <p>Your personal travel planning companion powered by cutting-edge AI technology</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-card">
+                <h2>🚀 Our Vision</h2>
+                <p>We're on a mission to revolutionize travel planning by leveraging artificial intelligence to create personalized, stress-free travel experiences. Our platform combines advanced algorithms with local insights to craft the perfect itinerary for every traveler.</p>
+            </div>
+            
+            <div class="about-card">
+                <h2>💡 How It Works</h2>
+                <p>Simply share your destination, budget, and interests. Our AI analyzes millions of data points to recommend the best attractions, dining, and activities tailored specifically to your preferences, saving you hours of research.</p>
+            </div>
+            
+            <div class="about-card">
+                <h2>✨ Why Choose Us</h2>
+                <p>Unlike traditional travel agencies, we use real-time data and machine learning to provide up-to-date recommendations that adapt to your needs. Whether you're a solo adventurer or a family on vacation, we've got you covered.</p>
+            </div>
+        </div>
+        
+        <div class="creator">
+            <p>Designed and Developed with ❤️ by</p>
+            <div class="signature">Asad Rizvi</div>
+            <p>Bringing travel dreams to life, one algorithm at a time</p>
+        </div>
+    </main>
+</body>
+</html>
