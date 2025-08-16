@@ -1,0 +1,16 @@
+# Force GitHub to recognize TypeScript files as JavaScript
+*.ts linguist-language=JavaScript
+*.tsx linguist-language=JavaScript
+
+# Ensure these files are treated as binary (prevents GitHub from analyzing them)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+
+# Exclude certain directories from language statistics
+package-lock.json -linguist-documentation
+*.md -linguist-documentation
+*.json -linguist-documentation
