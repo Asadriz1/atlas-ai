@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "routes": [
+    {
+      "src": "/app",
+      "dest": "/app.html"
+    },
+    {
+      "src": "/(.*)",
+      "status": 200,
+      "dest": "/index.html"
+    }
+  ]
+}
