@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { jsPDF } from 'jspdf';
@@ -7,7 +7,12 @@ import html2canvas from 'html2canvas';
 gsap.registerPlugin(ScrollToPlugin);
 
 // --- State ---
-const API_KEY = (typeof window !== 'undefined' && window.GEMINI_API_KEY) || undefined;
+// Prefer Vite env (requires defining VITE_GEMINI_API_KEY in .env.local)
+const API_KEY =
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY)
+  || (typeof process !== 'undefined' && process.env && process.env.VITE_GEMINI_API_KEY)
+  || (typeof window !== 'undefined' && window.GEMINI_API_KEY)
+  || undefined;
 let ai;
 let isLoading = false;
 let isNavigating = false;
@@ -88,16 +93,19 @@ const showSetupGuide = () => {
     <p>To get started, you need to provide your Google Gemini API key.</p>
     <ol>
       <li>If you don't have one, get a free API key at <strong><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></strong>.</li>
-      <li>Open the <strong><code>config.js</code></strong> file in your project folder.</li>
-      <li>Paste your key into the file, replacing <code>"PASTE_YOUR_API_KEY_HERE"</code>.</li>
+      <li>Create a file named <strong><code>.env.local</code></strong> in the project root.</li>
+      <li>Add this line with your key:<br/><code>VITE_GEMINI_API_KEY=YOUR_API_KEY_HERE</code></li>
     </ol>
-    <code>window.GEMINI_API_KEY = "YOUR_API_KEY_HERE";</code>
+    <p>(Optional fallback) You can also set <code>window.GEMINI_API_KEY</code> in <code>config.js</code>, but using <code>.env.local</code> is recommended.</p>
     <p>After adding your key, please <strong>refresh the page</strong>.</p>
   `;
 };
 
 const initializeApp = () => {
-  const apiKey = (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) || API_KEY;
+  console.log('API Key via import.meta.env:', (typeof import.meta !== 'undefined' && import.meta.env && !!import.meta.env.VITE_GEMINI_API_KEY));
+  console.log('API Key via window fallback present:', typeof window !== 'undefined' && !!window.GEMINI_API_KEY);
+  const apiKey = API_KEY;
+  console.log('Using API Key:', apiKey ? 'Key found' : 'No key found');
   if (!apiKey || apiKey === 'PASTE_YOUR_API_KEY_HERE' || apiKey === 'YOUR_API_KEY_HERE') {
     if (location.hash === '#about') {
       runMainApp();
@@ -107,7 +115,9 @@ const initializeApp = () => {
     return;
   }
   try {
-    ai = new GoogleGenAI({ apiKey });
+    // For '@google/generative-ai', the constructor expects the API key STRING
+    // If using '@google/genai', use: new GoogleGenerativeAI({ apiKey })
+    ai = new GoogleGenerativeAI(apiKey);
     runMainApp();
   } catch (error) {
     console.error('Initialization Error:', error);
@@ -393,15 +403,16 @@ const handleFormSubmit = async (event) => {
   const prompt = `You are a world-class travel agent AI. Create a highly personalized travel itinerary based on these details:\n- Destination: ${destination}\n- Trip Duration: ${duration} days\n- Budget Level: ${activeBudget}\n- Age Group: ${ageGroup}\n- Main Interests: ${interests}\n- Desired Trip Vibe: "${tripVibe || 'A standard, well-rounded experience.'}"\n- Location Preference: ${activeSpotPreference}\n\nReturn a valid JSON object strictly matching this schema: ${JSON.stringify(itinerarySchema)}`;
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        responseMimeType: 'application/json'
-      }
-    });
-    const jsonString = (response && response.text && response.text.trim && response.text.trim()) || '';
-    const jsonMatch = jsonString.match(/\{[\s\S]*\}/);
+    // Get the generative model
+    const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    
+    // Generate content
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    
+    // Extract JSON from the response
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('No JSON found in response');
     const itinerary = JSON.parse(jsonMatch[0]);
     displayItinerary(itinerary);

@@ -1,12 +1,13 @@
 
 // ------------------------------------------------------------------
-//  VOYAGE AI CONFIGURATION
+//  VOYAGE AI CONFIGURATION (Optional Fallback)
 // ------------------------------------------------------------------
-// 1. Get your free Gemini API Key at https://aistudio.google.com/app/apikey
-// 2. Paste your key below, inside the quotation marks.
+// Preferred: create a .env.local in the project root and set:
+//   VITE_GEMINI_API_KEY=YOUR_API_KEY_HERE
+// This file is optional and should NOT contain real keys committed to source.
+// If needed for local testing without Vite envs, you can uncomment the line
+// below and paste a temporary key (do NOT commit it!).
 //
-// Example:
-// window.GEMINI_API_KEY = "ABCa123dEfg456...";
+// Example (DO NOT COMMIT REAL KEYS):
+// window.GEMINI_API_KEY = "YOUR_API_KEY_HERE";
 // ------------------------------------------------------------------
-
-window.GEMINI_API_KEY = "AIzaSyBtAKvwAhtCDPq_59CN1qgwT6DNESQ-z9E";

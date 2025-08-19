@@ -4,7 +4,7 @@ import { InfiniteMovingCards } from "./ui/infinite-moving-cards-clean";
 
 export function InfiniteMovingCardsDemo() {
   return (
-    <div className="py-12 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black w-full">
+    <div className="py-12 w-full">
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-[30rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
           <InfiniteMovingCards
